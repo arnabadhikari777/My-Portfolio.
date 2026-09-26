@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Arnab Adhikari - Student Developer | Python, Flask, Web Development Portfolio" />
+  <title>Arnab Adhikari | Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#home" class="logo">Arnab<span>.</span></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="container hero-content">
+      <div class="hero-text">
+        <p class="hero-greeting">Hi, I'm</p>
+        <h1>Arnab Adhikari</h1>
+        <h2 class="hero-role">Student Developer</h2>
+        <p class="hero-desc">
+          Building useful web apps with <strong>Python</strong>, <strong>Flask</strong> & modern frontend.
+          Passionate about turning ideas into real projects.
+        </p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn btn-primary">View Projects</a>
+          <a href="#contact" class="btn btn-outline">Contact Me</a>
+        </div>
+        <div class="hero-socials">
+          <a href="https://github.com/arnabadhikari777" target="_blank" rel="noopener" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="mailto:arnabadhikari12517y@gmail.com" aria-label="Email">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="image-wrapper">
+          <img src="https://avatars.githubusercontent.com/u/arnabadhikari777?v=4" alt="Arnab Adhikari" id="profile-img" onerror="this.src='https://ui-avatars.com/api/?name=Arnab+Adhikari&background=0ea5e9&color=fff&size=300'" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about">
+    <div class="container">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <p>
+            I'm a student developer who loves building practical applications.
+            I mainly work with <strong>Python</strong> and <strong>Flask</strong>, and I also use
+            <strong>HTML</strong>, <strong>CSS</strong> and a bit of <strong>JavaScript</strong>.
+          </p>
+          <p>
+            I have a partner who is excellent at frontend (HTML, CSS, JavaScript),
+            so together we create complete full-stack projects — I handle the backend
+            (Flask + SQLite) and he takes care of the UI.
+          </p>
+          <p>
+            My goal is to keep learning and build tools that people can actually use
+            in daily life — like money trackers, news apps, and AI helpers.
+          </p>
+        </div>
+        <div class="about-cards">
+          <div class="info-card">
+            <i class="fas fa-graduation-cap"></i>
+            <h3>Student</h3>
+            <p>Learning by building real projects</p>
+          </div>
+          <div class="info-card">
+            <i class="fas fa-code"></i>
+            <h3>Backend Focus</h3>
+            <p>Python • Flask • SQLite</p>
+          </div>
+          <div class="info-card">
+            <i class="fas fa-users"></i>
+            <h3>Teamwork</h3>
+            <p>Partner strong in Frontend</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="skills">
+    <div class="container">
+      <h2 class="section-title">Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <i class="fab fa-python"></i>
+          <h3>Python</h3>
+          <p>Core language for all my backend work</p>
+        </div>
+        <div class="skill-card">
+          <i class="fas fa-flask"></i>
+          <h3>Flask</h3>
+          <p>Building web apps & APIs</p>
+        </div>
+        <div class="skill-card">
+          <i class="fas fa-database"></i>
+          <h3>SQLite</h3>
+          <p>Database design & management</p>
+        </div>
+        <div class="skill-card">
+          <i class="fab fa-html5"></i>
+          <h3>HTML</h3>
+          <p>Structure of web pages</p>
+        </div>
+        <div class="skill-card">
+          <i class="fab fa-css3-alt"></i>
+          <h3>CSS</h3>
+          <p>Styling & responsive design</p>
+        </div>
+        <div class="skill-card">
+          <i class="fab fa-js"></i>
+          <h3>JavaScript</h3>
+          <p>Basic interactivity & frontend logic</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="projects">
+    <div class="container">
+      <h2 class="section-title">Featured Projects</h2>
+      <div class="projects-grid">
+
+        <!-- Project 1: Money Manager -->
+        <article class="project-card">
+          <div class="project-header">
+            <h3>My Money Manager</h3>
+            <div class="project-links">
+              <a href="https://github.com/arnabadhikari777/my_money_maneger" target="_blank" rel="noopener" title="GitHub">
+                <i class="fab fa-github"></i>
+              </a>
+            </div>
+          </div>
+          <p class="project-desc">
+            A full personal finance PWA built with Flask + SQLAlchemy.
+            Tracks bank, UPI, card & cash accounts with real note denominations.
+            Features encrypted notes, budgets, statistics, backup/restore and push reminders.
+          </p>
+          <div class="project-tags">
+            <span>Python</span>
+            <span>Flask</span>
+            <span>SQLite</span>
+            <span>PWA</span>
+          </div>
+        </article>
+
+        <!-- Project 2: AA News -->
+        <article class="project-card featured">
+          <div class="project-header">
+            <h3>A.A. News</h3>
+            <div class="project-links">
+              <a href="https://arnabadhikari125117y.pythonanywhere.com/" target="_blank" rel="noopener" title="Live Demo">
+                <i class="fas fa-external-link-alt"></i>
+              </a>
+              <a href="https://github.com/arnabadhikari777/AA_News" target="_blank" rel="noopener" title="GitHub">
+                <i class="fab fa-github"></i>
+              </a>
+            </div>
+          </div>
+          <p class="project-desc">
+            A live news website that brings fresh, verified headlines covering politics,
+            technology, sports, business and entertainment. Built and deployed on PythonAnywhere.
+          </p>
+          <div class="project-tags">
+            <span>Python</span>
+            <span>Flask</span>
+            <span>News API</span>
+            <span>Live</span>
+          </div>
+        </article>
+
+        <!-- Project 3: Beyonder AI -->
+        <article class="project-card">
+          <div class="project-header">
+            <h3>Beyonder AI 2.0</h3>
+            <div class="project-links">
+              <a href="https://github.com/arnabadhikari777/Beyonder-Ai-2.0" target="_blank" rel="noopener" title="GitHub">
+                <i class="fab fa-github"></i>
+              </a>
+            </div>
+          </div>
+          <p class="project-desc">
+            Student-focused AI learning companion. Frontend with login/signup, OTP,
+            chat interface (Markdown + math support) and PWA features.
+            Backend handles authentication and chat history.
+          </p>
+          <div class="project-tags">
+            <span>JavaScript</span>
+            <span>Flask</span>
+            <span>PWA</span>
+            <span>AI</span>
+          </div>
+        </article>
+
+        <!-- Project 4: Arnab Game -->
+        <article class="project-card">
+          <div class="project-header">
+            <h3>Arnab Game</h3>
+            <div class="project-links">
+              <a href="https://github.com/arnabadhikari777/Arnab-Game" target="_blank" rel="noopener" title="GitHub">
+                <i class="fab fa-github"></i>
+              </a>
+            </div>
+          </div>
+          <p class="project-desc">
+            A Python-based game project with assets and structure ready for
+            mobile packaging using Buildozer. Built while learning game development concepts.
+          </p>
+          <div class="project-tags">
+            <span>Python</span>
+            <span>Game</span>
+          </div>
+        </article>
+
+        <!-- Project 5: Nebula Tools -->
+        <article class="project-card">
+          <div class="project-header">
+            <h3>Nebula Tools Suite</h3>
+            <div class="project-links">
+              <a href="https://github.com/arnabadhikari777?tab=repositories" target="_blank" rel="noopener" title="All Repos">
+                <i class="fab fa-github"></i>
+              </a>
+            </div>
+          </div>
+          <p class="project-desc">
+            Collection of useful utility tools: File Organizer, File Compressor,
+            QR Code Re-generator, Secret manager and more — all built with Python.
+          </p>
+          <div class="project-tags">
+            <span>Python</span>
+            <span>Utilities</span>
+          </div>
+        </article>
+
+        <!-- Project 6: Satellite Tracker -->
+        <article class="project-card">
+          <div class="project-header">
+            <h3>Satellite Tracker</h3>
+            <div class="project-links">
+              <a href="https://github.com/arnabadhikari777/Satellite-Tracker" target="_blank" rel="noopener" title="GitHub">
+                <i class="fab fa-github"></i>
+              </a>
+            </div>
+          </div>
+          <p class="project-desc">
+            An HTML-based satellite tracking interface. Early project while learning
+            web technologies and real-time data visualization concepts.
+          </p>
+          <div class="project-tags">
+            <span>HTML</span>
+            <span>CSS</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2 class="section-title">Get In Touch</h2>
+      <p class="contact-intro">
+        Want to collaborate or just say hi? Feel free to reach out!
+      </p>
+      <div class="contact-cards">
+        <a href="mailto:arnabadhikari12517y@gmail.com" class="contact-card">
+          <i class="fas fa-envelope"></i>
+          <h3>Email</h3>
+          <p>arnabadhikari12517y@gmail.com</p>
+        </a>
+        <a href="https://github.com/arnabadhikari777" target="_blank" rel="noopener" class="contact-card">
+          <i class="fab fa-github"></i>
+          <h3>GitHub</h3>
+          <p>@arnabadhikari777</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Arnab Adhikari. Built with ❤️ while learning.</p>
+      <p class="footer-note">Open to learning opportunities & collaborations.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
