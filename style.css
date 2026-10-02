@@ -16,11 +16,15 @@
     --c-cyan: #00d4ff;    /* Bright Sky Cyan */
     --c-pink: #2dd4bf;    /* Teal/Aqua (হালকা ফিরোজা) */
     --c-purple: #38bdf8;  /* Light Blue */
+    --c-indigo: #818cf8;  /* Soft Indigo (নতুন গ্রেডিয়েন্ট কালার) */
+    --c-violet: #a78bfa;  /* Soft Violet */
 
     /* Reusable gradients */
-    --grad-main: linear-gradient(90deg, var(--c-green), var(--c-cyan), var(--c-pink), var(--c-green));
-    --grad-btn: linear-gradient(45deg, var(--c-cyan), var(--c-green));
-    --grad-border: linear-gradient(45deg, var(--c-pink), var(--c-cyan), var(--c-green), var(--c-purple));
+    --grad-main: linear-gradient(90deg, var(--c-green), var(--c-cyan), var(--c-indigo), var(--c-pink), var(--c-green));
+    --grad-btn: linear-gradient(135deg, var(--c-cyan), var(--c-green) 45%, var(--c-pink) 75%, var(--c-indigo));
+    --grad-border: linear-gradient(135deg, var(--c-pink), var(--c-cyan), var(--c-indigo), var(--c-violet));
+    --grad-soft: linear-gradient(135deg, rgba(0, 212, 255, 0.14), rgba(129, 140, 248, 0.1) 55%, rgba(45, 212, 191, 0.1));
+    --ease: cubic-bezier(0.22, 0.7, 0.2, 1);
 }
 
 /* ============ Base ============ */
@@ -32,11 +36,27 @@
 }
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 76px; /* sticky navbar এর নিচে সেকশন টাইটেল যেন ঢাকা না পড়ে */
+    -webkit-text-size-adjust: 100%;
 }
 body {
     background-color: var(--bg);
     color: var(--text);
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+}
+/* Aurora background — স্ট্যাটিক গ্রেডিয়েন্ট, তাই ফোনে ল্যাগ হয় না */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(55% 45% at 10% 6%, rgba(0, 212, 255, 0.16), transparent 70%),
+        radial-gradient(50% 45% at 95% 30%, rgba(129, 140, 248, 0.15), transparent 70%),
+        radial-gradient(60% 50% at 65% 98%, rgba(45, 212, 191, 0.13), transparent 70%);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -167,32 +187,24 @@ a {
     position: fixed;
     top: 0;
     left: 0;
-    width: 300px;
-    height: 300px;
+    width: 340px;
+    height: 340px;
+    margin: -170px 0 0 -170px;
     border-radius: 50%;
     pointer-events: none;
-    background: conic-gradient(
-        from 0deg,
-        rgba(45, 226, 180, 0.16),
-        rgba(56, 199, 255, 0.16),
-        rgba(255, 159, 122, 0.16),
-        rgba(45, 226, 180, 0.16)
+    background: radial-gradient(
+        circle,
+        rgba(0, 212, 255, 0.2),
+        rgba(129, 140, 248, 0.12) 42%,
+        transparent 70%
     );
-    filter: blur(30px);
-    transform: translate(-50%, -50%);
     z-index: 1;
     opacity: 0;
     transition: opacity 0.4s ease;
-    animation: cursorSpin 6s linear infinite;
     will-change: transform;
 }
 .cursor-glow.active {
     opacity: 1;
-}
-@keyframes cursorSpin {
-    to {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
 }
 @media (hover: none) {
     .cursor-glow {
@@ -201,32 +213,47 @@ a {
 }
 
 /* ============ Scroll Reveal ============ */
-.reveal-up {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: all 0.7s ease var(--delay, 0s);
-}
-.reveal-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-.reveal-left {
-    opacity: 0;
-    transform: translateX(-40px);
-    transition: all 0.7s ease var(--delay, 0s);
-}
-.reveal-left.visible {
-    opacity: 1;
-    transform: translateX(0);
-}
+/* আগে transition ব্যবহার হচ্ছিল, কিন্তু card গুলোর নিজের transition ওটা ওভাররাইট করে দিত
+   (delay + fade কাজ করত না)। এখন keyframe animation — hover/tilt এর সাথে conflict নেই। */
+.reveal-up,
+.reveal-left,
 .reveal-right {
     opacity: 0;
-    transform: translateX(40px);
-    transition: all 0.7s ease var(--delay, 0s);
 }
+.reveal-up {
+    transform: translateY(28px);
+}
+.reveal-left {
+    transform: translateX(-40px);
+}
+.reveal-right {
+    transform: translateX(40px);
+}
+.reveal-up.visible,
+.reveal-left.visible,
 .reveal-right.visible {
     opacity: 1;
-    transform: translateX(0);
+    transform: none;
+    animation: revealIn 0.8s var(--ease) var(--delay, 0s) backwards;
+}
+.reveal-up.visible {
+    --from: translateY(28px);
+}
+.reveal-left.visible {
+    --from: translateX(-40px);
+}
+.reveal-right.visible {
+    --from: translateX(40px);
+}
+@keyframes revealIn {
+    from {
+        opacity: 0;
+        transform: var(--from);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 /* ============ Navbar ============ */
@@ -234,9 +261,10 @@ a {
     position: sticky;
     top: 0;
     z-index: 500;
-    background: rgba(8, 18, 26, 0.94);
+    background: rgba(8, 18, 26, 0.82);
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
 }
 .navbar::after {
     content: "";
@@ -247,7 +275,8 @@ a {
     height: 2px;
     background: var(--grad-main);
     background-size: 300%;
-    opacity: 0.6;
+    opacity: 0.7;
+    animation: gradientMove 8s ease infinite;
 }
 .nav-container {
     display: flex;
@@ -259,9 +288,13 @@ a {
 .logo {
     font-size: 24px;
     font-weight: 800;
+    letter-spacing: -0.5px;
 }
 .logo span {
-    color: var(--c-green);
+    background: var(--grad-btn);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .nav-links {
@@ -381,16 +414,33 @@ a {
     }
 }
 
+.hero-greeting {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+}
 .hero-text h1 {
     font-size: 60px;
-    line-height: 1.2;
+    line-height: 1.15;
     margin-bottom: 10px;
     font-weight: 800;
+    letter-spacing: -1.5px;
+    background: linear-gradient(100deg, #ffffff 20%, #bae6fd 60%, #c7d2fe);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 .hero-role {
     font-size: 28px;
     margin-bottom: 20px;
     font-weight: 700;
+    min-height: 1.4em;
+}
+/* scramble এর সময় অক্ষরের width বদলায়, তাই লাইন যেন না ভাঙে/লাফায় */
+.hero-role .gradient-text {
+    display: inline-block;
+    white-space: nowrap;
 }
 .hero-desc {
     color: var(--text-dim2);
@@ -414,12 +464,32 @@ a {
     padding: 12px 30px;
     font-size: 17px;
     font-weight: bold;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
     z-index: 1;
-    transition: all 0.3s ease;
+    transition:
+        transform 0.3s var(--ease),
+        box-shadow 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease,
+        background 0.3s ease;
+}
+.btn .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.45);
+    transform: scale(0);
+    animation: rippleOut 0.65s ease-out forwards;
+    pointer-events: none;
+    z-index: -1;
+}
+@keyframes rippleOut {
+    to {
+        transform: scale(1);
+        opacity: 0;
+    }
 }
 .btn-primary {
     background: var(--grad-btn);
@@ -430,9 +500,9 @@ a {
     animation: gradientMove 5s ease infinite;
 }
 .btn-primary:hover {
-    box-shadow: 0 0 25px rgba(56, 199, 255, 0.8);
+    box-shadow: 0 8px 30px rgba(56, 199, 255, 0.55);
     transform: translateY(-3px);
-    color: #fff;
+    color: var(--bg); /* আগে #fff ছিল — উজ্জ্বল গ্রেডিয়েন্টের উপর লেখা পড়া যেত না */
 }
 .btn-outline {
     background: transparent;
@@ -521,14 +591,18 @@ a {
     aspect-ratio: 1;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    background: radial-gradient(
-        circle at 50% 28%,
-        rgba(56, 199, 255, 0.5),
-        rgba(45, 226, 180, 0.26) 55%,
-        transparent 100%
-    );
-    border: 1px solid rgba(45, 226, 180, 0.4);
-    box-shadow: 0 0 70px rgba(45, 226, 180, 0.2);
+    background:
+        radial-gradient(
+            circle at 50% 26%,
+            rgba(56, 199, 255, 0.55),
+            rgba(129, 140, 248, 0.3) 52%,
+            rgba(45, 226, 180, 0.12) 80%,
+            transparent 100%
+        );
+    border: 1px solid rgba(125, 211, 252, 0.4);
+    box-shadow:
+        0 0 70px rgba(56, 199, 255, 0.22),
+        inset 0 0 40px rgba(129, 140, 248, 0.15);
 }
 .hero-photo-wrap {
     position: absolute;
@@ -538,17 +612,23 @@ a {
     z-index: 2;
     display: flex;
     justify-content: center;
-    animation: float 5s ease-in-out infinite;
+    animation: float 6s ease-in-out infinite;
+    will-change: transform;
 }
+/* স্বচ্ছ (transparent) কাটআউট ছবি — গোল ফ্রেম/সাদা ব্যাকগ্রাউন্ড নেই।
+   মাথা disc এর উপরে বেরিয়ে আসে, নিচের দিকটা মিলিয়ে যায়। */
 .hero-photo {
-    width: calc(var(--s) * 0.78);
-    height: calc(var(--s) * 0.78);
-    object-fit: cover;
-    object-position: center 15%;
-    border-radius: 50%;
-    background: #0c1a24;
-    border: 3px solid rgba(45, 226, 180, 0.35);
-    box-shadow: 0 0 40px rgba(45, 226, 180, 0.15);
+    display: block;
+    width: calc(var(--s) * 0.98);
+    height: auto;
+    max-width: none;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    /* নিচ ও ডান কিনারার fade ছবির alpha তেই বসানো আছে — CSS mask লাগে না, তাই ফোনে হালকা */
+    user-select: none;
+    -webkit-user-drag: none;
 }
 @keyframes float {
     0%,
@@ -556,7 +636,7 @@ a {
         transform: translateY(0);
     }
     50% {
-        transform: translateY(-20px);
+        transform: translateY(-12px);
     }
 }
 
@@ -653,13 +733,16 @@ a {
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     padding: 16px 0;
-    background: #0a1720;
+    background: linear-gradient(90deg, rgba(10, 23, 32, 0.92), rgba(18, 26, 52, 0.9), rgba(10, 23, 32, 0.92));
     white-space: nowrap;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
 .marquee-track {
     display: inline-flex;
-    gap: 40px;
-    animation: marqueeScroll 26s linear infinite;
+    gap: 0; /* gap এর বদলে margin — যাতে -50% এ লুপ ঠিক মেলে, ঝাঁকুনি না লাগে */
+    animation: marqueeScroll 28s linear infinite;
+    will-change: transform;
 }
 .marquee:hover .marquee-track {
     animation-play-state: paused;
@@ -669,6 +752,7 @@ a {
     letter-spacing: 1.5px;
     font-weight: 700;
     padding: 0 4px;
+    margin-right: 40px;
 }
 .marquee-track span:nth-child(4n + 1) {
     color: var(--c-green);
@@ -680,7 +764,7 @@ a {
     color: var(--c-pink);
 }
 .marquee-track span:nth-child(4n + 4) {
-    color: var(--c-purple);
+    color: var(--c-indigo);
 }
 @keyframes marqueeScroll {
     from {
@@ -701,21 +785,27 @@ section {
     margin-bottom: 15px;
     font-weight: 800;
     text-align: center;
-    color: #f0fbff;
     position: relative;
     z-index: 2;
     letter-spacing: -0.5px;
+    background: linear-gradient(90deg, #ffffff, #bae6fd 55%, #c7d2fe);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 .section-title::after {
     content: "";
     display: block;
-    width: 60px;
+    width: 64px;
     height: 3px;
     margin: 12px auto 0;
     border-radius: 2px;
-    background: linear-gradient(90deg, var(--c-green), var(--c-cyan));
+    background: var(--grad-main);
+    background-size: 300%;
+    animation: gradientMove 5s ease infinite;
 }
-.section-subtitle {
+.section-subtitle,
+.contact-intro {
     text-align: center;
     color: var(--text-dim);
     margin-bottom: 50px;
@@ -732,7 +822,7 @@ section {
     margin: 0 auto;
 }
 .code-card {
-    background: linear-gradient(180deg, #0f202b, var(--surface));
+    background: linear-gradient(160deg, #0f202b 0%, #12304a 60%, #1a2550 130%);
     border: 1px solid var(--border);
     border-radius: 16px;
     overflow: hidden;
@@ -811,12 +901,16 @@ section {
     margin: 40px auto 0;
 }
 .stat {
+    position: relative;
     padding: 22px 12px;
     text-align: center;
     border-radius: 14px;
-    background: var(--surface);
+    background: linear-gradient(160deg, var(--surface), rgba(24, 38, 78, 0.55));
     border: 1px solid var(--border);
-    transition: transform 0.3s;
+    transition:
+        transform 0.35s var(--ease),
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
 }
 .stat:hover {
     transform: translateY(-5px);
@@ -831,8 +925,9 @@ section {
 .stat b {
     font-size: 32px;
     font-weight: 800;
-    background: linear-gradient(90deg, var(--c-green), var(--c-cyan));
+    background: linear-gradient(90deg, var(--c-green), var(--c-cyan), var(--c-indigo));
     -webkit-background-clip: text;
+    background-clip: text;
     color: transparent;
     display: block;
 }
@@ -844,18 +939,28 @@ section {
 /* ============ Skills ============ */
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-template-columns: repeat(3, 1fr); /* ৬টা কার্ড = ৩×২, একা ঝুলে থাকা কার্ড নেই */
     gap: 25px;
-    max-width: 1000px;
+    max-width: 900px;
     margin: 0 auto;
 }
+@media (max-width: 600px) {
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+}
 .skill-card {
-    background: var(--surface);
+    position: relative;
+    background: linear-gradient(165deg, var(--surface), rgba(22, 36, 74, 0.5));
     padding: 30px 20px;
-    border-radius: 12px;
+    border-radius: 14px;
     border: 1px solid rgba(255, 255, 255, 0.05);
     text-align: center;
-    transition: all 0.4s ease;
+    transition:
+        transform 0.4s var(--ease),
+        box-shadow 0.4s ease,
+        border-color 0.4s ease;
 }
 .skill-card:hover {
     transform: translateY(-8px);
@@ -865,9 +970,14 @@ section {
 .skill-card i {
     font-size: 36px;
     margin-bottom: 15px;
-    background: linear-gradient(45deg, var(--c-green), var(--c-cyan));
+    background: linear-gradient(45deg, var(--c-green), var(--c-cyan), var(--c-indigo));
     -webkit-background-clip: text;
+    background-clip: text;
     color: transparent;
+    transition: transform 0.4s var(--ease);
+}
+.skill-card:hover i {
+    transform: scale(1.12) rotate(-4deg);
 }
 .skill-card h3 {
     font-size: 18px;
@@ -880,7 +990,7 @@ section {
 
 /* ============ Projects & Collaborations (Advanced UI) ============ */
 .projects.alt {
-    background: linear-gradient(180deg, transparent, rgba(14, 27, 37, 0.4));
+    background: linear-gradient(180deg, transparent, rgba(24, 30, 66, 0.35) 60%, rgba(14, 27, 37, 0.4));
 }
 .projects-grid {
     display: grid;
@@ -893,17 +1003,45 @@ section {
 
 .project-card {
     --accent: var(--c-cyan);
-    background: linear-gradient(180deg, #0f202b, var(--surface) 45%);
+    background: linear-gradient(180deg, #0f202b, var(--surface) 45%, #14264a 160%);
     border-radius: 20px;
     border: 1px solid var(--border);
     overflow: hidden;
     position: relative;
     transition:
-        transform 0.4s ease,
-        box-shadow 0.4s ease;
+        transform 0.45s var(--ease),
+        box-shadow 0.45s ease,
+        border-color 0.3s ease;
+}
+/* tilt চলার সময় ছোট transition, যাতে মাউসের সাথে ল্যাগ ছাড়া ঘোরে */
+.project-card.is-tilting {
+    transition:
+        transform 0.12s ease-out,
+        box-shadow 0.45s ease,
+        border-color 0.3s ease;
 }
 .project-card.solo {
     --accent: var(--c-green);
+}
+/* Mouse spotlight — projects.js আগে থেকেই --mx/--my সেট করত, কিন্তু CSS ছিল না */
+.project-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    background: radial-gradient(
+        420px circle at var(--mx, 50%) var(--my, 0%),
+        color-mix(in srgb, var(--accent) 16%, transparent),
+        rgba(129, 140, 248, 0.07) 40%,
+        transparent 65%
+    );
+}
+.project-card:hover::after {
+    opacity: 1;
 }
 .project-card:hover {
     transform: translateY(-8px);
@@ -941,11 +1079,13 @@ section {
 .stage-bg {
     position: absolute;
     inset: 0;
-    background: radial-gradient(
-        circle at 50% 50%,
-        color-mix(in srgb, var(--accent) 15%, transparent),
-        transparent 70%
-    );
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            color-mix(in srgb, var(--accent) 18%, transparent),
+            transparent 70%
+        ),
+        radial-gradient(circle at 100% 0%, rgba(129, 140, 248, 0.16), transparent 55%);
 }
 .project-img::after {
     content: "";
@@ -1220,6 +1360,7 @@ section {
 }
 .more-btn:hover {
     background: color-mix(in srgb, var(--accent) 10%, transparent);
+    border-style: solid;
 }
 .more-btn i {
     transition: transform 0.4s ease;
@@ -1305,6 +1446,7 @@ section {
 }
 .lnk-main {
     background: var(--grad-btn);
+    background-size: 160%;
     color: var(--bg) !important;
 }
 .lnk-main:hover {
@@ -1384,12 +1526,15 @@ section {
     margin: 0 auto;
 }
 .contact-card {
-    background: var(--surface);
+    background: linear-gradient(165deg, var(--surface), rgba(22, 36, 74, 0.5));
     padding: 36px 24px;
     border-radius: 16px;
     border: 1px solid var(--border);
     text-align: center;
-    transition: all 0.3s ease;
+    transition:
+        transform 0.35s var(--ease),
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1405,16 +1550,16 @@ section {
 .contact-card i {
     font-size: 38px;
     color: var(--c-cyan);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s var(--ease);
 }
 .contact-card.whatsapp i {
     color: #25d366;
 }
 .contact-card.linkedin i {
-    color: #0a66c2;
+    color: #4b9cf0; /* গাঢ় নীল আগে ডার্ক ব্যাকগ্রাউন্ডে প্রায় দেখা যেত না */
 }
 .contact-card.facebook i {
-    color: #1877f2;
+    color: #4c8dff;
 }
 .contact-card.instagram i {
     background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
@@ -1442,7 +1587,17 @@ section {
     margin-top: 50px;
     position: relative;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
-    background: rgba(8, 18, 26, 0.5);
+    background: linear-gradient(180deg, rgba(8, 18, 26, 0.5), rgba(18, 24, 56, 0.55));
+}
+.footer::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--c-cyan), var(--c-indigo), transparent);
+    opacity: 0.7;
 }
 .footer-socials {
     display: flex;
@@ -1656,5 +1811,168 @@ section {
         font-size: 14px !important; /* স্ক্রিনে ফিট হওয়ার জন্য ফন্ট সাইজ একটু কমানো হলো */
         justify-content: center;
         text-align: center;
+    }
+}
+
+
+/* ============================================================
+   Polish Layer — gradients, smooth details, missing styles
+   ============================================================ */
+
+/* 1. Gradient hairline border (hover এ ফুটে ওঠে) */
+.project-card::before,
+.skill-card::before,
+.stat::before,
+.contact-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    padding: 1px;
+    border-radius: inherit;
+    background: var(--grad-border);
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+        linear-gradient(#000 0 0) content-box exclude,
+        linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+.project-card:hover::before,
+.skill-card:hover::before,
+.stat:hover::before,
+.contact-card:hover::before {
+    opacity: 1;
+}
+
+/* 2. Section এর উপরে হালকা গ্রেডিয়েন্ট ডিভাইডার */
+#skills::before,
+#collaborations::before,
+#projects::before,
+#contact::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(125, 211, 252, 0.35),
+        rgba(129, 140, 248, 0.35),
+        transparent
+    );
+}
+
+/* 3. Scroll cue (HTML এ ছিল, CSS ছিল না) */
+.scroll-cue {
+    position: absolute;
+    left: 50%;
+    bottom: 12px;
+    z-index: 3;
+    width: 24px;
+    height: 38px;
+    margin-left: -12px;
+    display: flex;
+    justify-content: center;
+    border: 2px solid rgba(186, 230, 253, 0.4);
+    border-radius: 14px;
+    transition: border-color 0.3s ease;
+}
+.scroll-cue:hover {
+    border-color: var(--c-cyan);
+}
+.scroll-cue span {
+    width: 4px;
+    height: 8px;
+    margin-top: 7px;
+    border-radius: 3px;
+    background: var(--grad-btn);
+    animation: cueDot 1.8s ease-in-out infinite;
+}
+@keyframes cueDot {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    70% {
+        transform: translateY(12px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+}
+
+/* 4. About buttons (desktop এও gap) */
+.about-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+/* 5. Hero eyebrow: হালকা গ্রেডিয়েন্ট */
+.hero-eyebrow {
+    background: var(--grad-soft);
+    border-color: rgba(125, 211, 252, 0.3);
+    color: #a5f3fc;
+}
+
+/* 6. Hero social icons hover — আরো স্মুথ */
+.hero-socials a,
+.footer-socials a {
+    transition:
+        transform 0.35s var(--ease),
+        color 0.3s ease,
+        border-color 0.3s ease,
+        background 0.3s ease,
+        filter 0.3s ease;
+}
+
+/* 7. Selection / scrollbar */
+::selection {
+    background: var(--c-indigo);
+    color: #fff;
+}
+html {
+    scrollbar-color: #2b4a66 var(--bg);
+    scrollbar-width: thin;
+}
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--c-cyan), var(--c-indigo));
+    border-radius: 8px;
+}
+
+/* 8. Small screens */
+@media (max-width: 768px) {
+    .scroll-cue {
+        display: none;
+    }
+    .hero-photo-wrap {
+        animation-duration: 7s;
+    }
+}
+@media (max-width: 380px) {
+    .hero-stage {
+        --s: 250px;
+    }
+    .hero-text h1 {
+        font-size: 36px;
+    }
+    .nav-container {
+        padding: 14px 18px;
     }
 }

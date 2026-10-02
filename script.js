@@ -83,15 +83,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const hamburger = $("hamburger");
     const navLinks = $("nav-links");
     if (hamburger && navLinks) {
-        hamburger.addEventListener("click", () => {
-            hamburger.classList.toggle("open");
-            navLinks.classList.toggle("open");
+        const setMenu = open => {
+            hamburger.classList.toggle("open", open);
+            navLinks.classList.toggle("open", open);
+            hamburger.setAttribute("aria-expanded", open ? "true" : "false");
+        };
+        hamburger.setAttribute("aria-expanded", "false");
+        hamburger.addEventListener("click", e => {
+            e.stopPropagation();
+            setMenu(!navLinks.classList.contains("open"));
         });
         navLinks.querySelectorAll("a").forEach(link => {
-            link.addEventListener("click", () => {
-                hamburger.classList.remove("open");
-                navLinks.classList.remove("open");
-            });
+            link.addEventListener("click", () => setMenu(false));
+        });
+        // মেনুর বাইরে ট্যাপ করলে বা Esc চাপলে বন্ধ হবে
+        document.addEventListener("click", e => {
+            if (!navLinks.contains(e.target)) setMenu(false);
+        });
+        document.addEventListener("keydown", e => {
+            if (e.key === "Escape") setMenu(false);
         });
     }
 
@@ -116,32 +126,59 @@ document.addEventListener("DOMContentLoaded", () => {
             const sec = document.querySelector(a.getAttribute("href"));
             if (sec) secObs.observe(sec);
         });
+        // একদম নিচে পৌঁছালে (ছোট Contact সেকশনে observer ধরে না) শেষ লিংক active করো
+        window.addEventListener(
+            "scroll",
+            () => {
+                const atBottom =
+                    window.innerHeight + window.scrollY >=
+                    document.documentElement.scrollHeight - 4;
+                if (!atBottom) return;
+                const last = navAnchors[navAnchors.length - 1];
+                navAnchors.forEach(a => a.classList.toggle("active", a === last));
+            },
+            { passive: true }
+        );
     }
 
     /* ---------- Cursor glow (desktop only) ---------- */
+    // আগের বাগ: CSS animation transform ওভাররাইট করত, তাই glow মাউস ফলো করত না।
+    // এখন CSS এ animation নেই; JS মসৃণভাবে (lerp) glow কে মাউসের দিকে টানে।
     const cursorGlow = $("cursorGlow");
     if (!isTouch && cursorGlow) {
-        let mx = 0,
-            my = 0,
-            raf = 0;
+        let tx = 0,
+            ty = 0,
+            cx = 0,
+            cy = 0,
+            running = false;
+        const loop = () => {
+            cx += (tx - cx) * 0.14;
+            cy += (ty - cy) * 0.14;
+            cursorGlow.style.transform =
+                "translate3d(" + cx.toFixed(1) + "px," + cy.toFixed(1) + "px,0)";
+            if (Math.abs(tx - cx) > 0.5 || Math.abs(ty - cy) > 0.5)
+                requestAnimationFrame(loop);
+            else running = false;
+        };
         window.addEventListener(
             "mousemove",
             e => {
-                mx = e.clientX;
-                my = e.clientY;
-                cursorGlow.classList.add("active");
-                if (raf) return;
-                raf = requestAnimationFrame(() => {
-                    cursorGlow.style.transform =
-                        "translate(" +
-                        mx +
-                        "px," +
-                        my +
-                        "px) translate(-50%,-50%)";
-                    raf = 0;
-                });
+                tx = e.clientX;
+                ty = e.clientY;
+                if (!cursorGlow.classList.contains("active")) {
+                    cx = tx;
+                    cy = ty;
+                    cursorGlow.classList.add("active");
+                }
+                if (!running) {
+                    running = true;
+                    requestAnimationFrame(loop);
+                }
             },
             { passive: true }
+        );
+        document.addEventListener("mouseleave", () =>
+            cursorGlow.classList.remove("active")
         );
     }
 
@@ -335,28 +372,40 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     /* ---------- Project card 3D tilt ---------- */
-    if (!isTouch) {
-        // Event delegation ব্যবহার করা হয়েছে, কারণ Card-গুলো JS থেকে dynamically তৈরি হতে পারে
-        document.body.addEventListener("mousemove", e => {
+    // আগের বাগ: mouseout কার্ডের ভিতরের child এ গেলেও ফায়ার হতো, তাই কার্ড কাঁপত।
+    // এখন relatedTarget চেক + rAF throttle, আর reset এ inline transform সরিয়ে দেওয়া হয়।
+    if (!isTouch && !reduceMotion) {
+        let tiltRaf = 0;
+        document.body.addEventListener(
+            "pointermove",
+            e => {
+                const card = e.target.closest(".tilt-card");
+                if (!card || e.pointerType === "touch") return;
+                const x = e.clientX,
+                    y = e.clientY;
+                if (tiltRaf) cancelAnimationFrame(tiltRaf);
+                tiltRaf = requestAnimationFrame(() => {
+                    const r = card.getBoundingClientRect();
+                    const rx = ((y - r.top) / r.height - 0.5) * -6;
+                    const ry = ((x - r.left) / r.width - 0.5) * 6;
+                    card.classList.add("is-tilting");
+                    card.style.transform =
+                        "perspective(900px) rotateX(" +
+                        rx.toFixed(2) +
+                        "deg) rotateY(" +
+                        ry.toFixed(2) +
+                        "deg) translateY(-6px)";
+                });
+            },
+            { passive: true }
+        );
+        document.body.addEventListener("pointerout", e => {
             const card = e.target.closest(".tilt-card");
             if (!card) return;
-            
-            const r = card.getBoundingClientRect();
-            const rx = ((e.clientY - r.top) / r.height - 0.5) * -8;
-            const ry = ((e.clientX - r.left) / r.width - 0.5) * 8;
-            card.style.transform =
-                "perspective(700px) rotateX(" +
-                rx +
-                "deg) rotateY(" +
-                ry +
-                "deg) translateY(-6px)";
-        });
-        
-        document.body.addEventListener("mouseout", e => {
-            const card = e.target.closest(".tilt-card");
-            if (!card) return;
-            card.style.transform =
-                "perspective(700px) rotateX(0) rotateY(0) translateY(0)";
+            if (e.relatedTarget && card.contains(e.relatedTarget)) return;
+            if (tiltRaf) cancelAnimationFrame(tiltRaf);
+            card.classList.remove("is-tilting");
+            card.style.transform = "";
         });
     }
 

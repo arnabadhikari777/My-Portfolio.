@@ -32,6 +32,19 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         />
         <link rel="stylesheet" href="style.css" />
+        <noscript>
+            <style>
+                .reveal-up,
+                .reveal-left,
+                .reveal-right {
+                    opacity: 1 !important;
+                    transform: none !important;
+                }
+                #preloader {
+                    display: none !important;
+                }
+            </style>
+        </noscript>
     </head>
     <body>
         <!-- Preloader -->
@@ -59,7 +72,13 @@
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
-                <button class="hamburger" id="hamburger" aria-label="Menu">
+                <button
+                    class="hamburger"
+                    id="hamburger"
+                    aria-label="Menu"
+                    aria-controls="nav-links"
+                    aria-expanded="false"
+                >
                     <span></span><span></span><span></span>
                 </button>
             </div>
@@ -150,8 +169,8 @@
                                 class="hero-photo"
                                 src="images/profilepic.webp"
                                 alt="Arnab Adhikari"
-                                width="464"
-                                height="492"
+                                width="804"
+                                height="873"
                                 fetchpriority="high"
                                 decoding="async"
                             />
