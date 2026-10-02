@@ -1,307 +1,447 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Arnab Adhikari - Student Developer | Python, Flask, SQLite Portfolio" />
-  <meta name="author" content="Arnab Adhikari" />
-  <title>Arnab Adhikari | Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-</head>
-<body>
-  <!-- Navbar -->
-  <nav class="navbar" id="navbar">
-    <div class="container nav-container">
-      <a href="#home" class="logo">Arnab<span>.</span></a>
-      <ul class="nav-links" id="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
-
-  <!-- Hero -->
-  <section id="home" class="hero">
-    <div class="container hero-content">
-      <div class="hero-text">
-        <p class="hero-greeting">Hi, I'm</p>
-        <h1>Arnab Adhikari</h1>
-        <h2 class="hero-role">Student Developer</h2>
-        <p class="hero-desc">
-          Building real-world web apps with <strong>Python</strong>, <strong>Flask</strong> & <strong>SQLite</strong>.
-          I focus on backend while collaborating with my friend <strong>Anubhab Dutta</strong> (excellent in HTML, CSS & JavaScript).
-        </p>
-        <div class="hero-btns">
-          <a href="#projects" class="btn btn-primary">View Projects</a>
-          <a href="#contact" class="btn btn-outline">Contact Me</a>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="Arnab Adhikari - Student Developer | Python, Flask, SQLite Portfolio"
+        />
+        <meta name="author" content="Arnab Adhikari" />
+        <meta name="theme-color" content="#0f172a" />
+        <title>Arnab Adhikari | Portfolio</title>
+        <link
+            rel="preload"
+            as="image"
+            href="images/profilepic.webp"
+            type="image/webp"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="preconnect"
+            href="https://cdnjs.cloudflare.com"
+            crossorigin
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <!-- Preloader -->
+        <div id="preloader">
+            <div class="loader-ring"></div>
+            <div class="loader-text">
+                <span class="gradient-text">Loading</span
+                ><span class="loader-pct" id="loaderPct">0%</span>
+            </div>
         </div>
-        <div class="hero-socials">
-          <a href="https://github.com/arnabadhikari777" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
-          <a href="https://wa.me/919475781056" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-          <a href="mailto:arnabadhikari12517y@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+
+        <!-- Scroll progress + cursor glow (desktop only) -->
+        <div id="scroll-progress"></div>
+        <div class="cursor-glow" id="cursorGlow"></div>
+
+        <!-- Navbar -->
+        <nav class="navbar" id="navbar">
+            <div class="container nav-container">
+                <a href="#home" class="logo">Arnab<span>.</span></a>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#collaborations">Collaborations</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Hero -->
+        <section id="home" class="hero">
+            <canvas id="particles" aria-hidden="true"></canvas>
+            <div class="container hero-content">
+                <div class="hero-text reveal-left">
+                    <p class="hero-eyebrow">
+                        <span class="dot-blink"></span> Open to collaborate
+                    </p>
+                    <p class="hero-greeting">Hi, I'm</p>
+                    <h1>Arnab Adhikari</h1>
+                    <h2 class="hero-role">
+                        <span class="gradient-text" id="scrambleWord"
+                            >Student Developer</span
+                        >
+                    </h2>
+                    <p class="hero-desc">
+                        Building real-world web apps with
+                        <strong>Python</strong>, <strong>Flask</strong> &amp;
+                        <strong>SQLite</strong>. I focus on backend while
+                        collaborating with my friend
+                        <strong>Anubhab Dutta</strong> (excellent in HTML, CSS
+                        &amp; JavaScript).
+                    </p>
+                    <div class="hero-btns">
+                        <a href="#collaborations" class="btn btn-primary"
+                            >View Projects</a
+                        >
+                        <a href="#contact" class="btn btn-outline"
+                            >Contact Me</a
+                        >
+                    </div>
+                    <div class="hero-socials">
+                        <a
+                            href="https://github.com/arnabadhikari777"
+                            target="_blank"
+                            rel="noopener"
+                            aria-label="GitHub"
+                            ><i class="fab fa-github"></i
+                        ></a>
+                        <a
+                            href="https://www.linkedin.com/in/arnab-adhikari-377277433"
+                            target="_blank"
+                            rel="noopener"
+                            aria-label="LinkedIn"
+                            ><i class="fab fa-linkedin-in"></i
+                        ></a>
+                        <a
+                            href="https://www.facebook.com/arnabadhikari7777"
+                            target="_blank"
+                            rel="noopener"
+                            aria-label="Facebook"
+                            ><i class="fab fa-facebook-f"></i
+                        ></a>
+                        <a
+                            href="https://www.instagram.com/arnabadhikari777"
+                            target="_blank"
+                            rel="noopener"
+                            aria-label="Instagram"
+                            ><i class="fab fa-instagram"></i
+                        ></a>
+                        <a
+                            href="https://wa.me/919475781056"
+                            target="_blank"
+                            rel="noopener"
+                            aria-label="WhatsApp"
+                            ><i class="fab fa-whatsapp"></i
+                        ></a>
+                        <a
+                            href="mailto:arnabadhikari12517y@gmail.com"
+                            aria-label="Email"
+                            ><i class="fas fa-envelope"></i
+                        ></a>
+                    </div>
+                </div>
+
+                <div class="hero-image reveal-right">
+                    <div class="hero-stage">
+                        <div class="orbit-ring ring-1"></div>
+                        <div class="orbit-ring ring-2"></div>
+                        <div class="hero-disc"></div>
+                        <div class="hero-photo-wrap">
+                            <img
+                                class="hero-photo"
+                                src="images/profilepic.webp"
+                                alt="Arnab Adhikari"
+                                width="464"
+                                height="492"
+                                fetchpriority="high"
+                                decoding="async"
+                            />
+                        </div>
+                        <div class="tech-orbit">
+                            <div class="tech-orbit-track">
+                                <div class="tech-badge" style="--angle: 0deg">
+                                    <span><i class="fab fa-python"></i></span>
+                                </div>
+                                <div class="tech-badge" style="--angle: 90deg">
+                                    <span><i class="fas fa-flask"></i></span>
+                                </div>
+                                <div class="tech-badge" style="--angle: 180deg">
+                                    <span><i class="fas fa-database"></i></span>
+                                </div>
+                                <div class="tech-badge" style="--angle: 270deg">
+                                    <span><i class="fab fa-js"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hero-chip chip-a">
+                            <i class="fas fa-server"></i> Backend Dev
+                        </div>
+                        <div class="hero-chip chip-b">
+                            <span class="dot-blink"></span> Open to collaborate
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="#about" class="scroll-cue" aria-label="Scroll down"
+                ><span></span
+            ></a>
+        </section>
+
+        <!-- Tech marquee -->
+        <div class="marquee" aria-hidden="true">
+            <div class="marquee-track">
+                <span>Python</span><span>Flask</span><span>SQLite</span
+                ><span>SQLAlchemy</span><span>HTML5</span><span>CSS3</span
+                ><span>JavaScript</span><span>PWA</span
+                ><span>Open to Collaborate</span><span>Backend Development</span
+                ><span>Always Learning</span> <span>Python</span
+                ><span>Flask</span><span>SQLite</span><span>SQLAlchemy</span
+                ><span>HTML5</span><span>CSS3</span><span>JavaScript</span
+                ><span>PWA</span><span>Open to Collaborate</span
+                ><span>Backend Development</span><span>Always Learning</span>
+            </div>
         </div>
-      </div>
-      <div class="hero-image">
-        <div class="image-wrapper">
-          <img src="https://avatars.githubusercontent.com/u/arnabadhikari777?v=4"
-               alt="Arnab Adhikari"
-               onerror="this.src='https://ui-avatars.com/api/?name=Arnab+Adhikari&background=0ea5e9&color=fff&size=300'" />
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- About -->
-  <section id="about" class="about">
-    <div class="container">
-      <h2 class="section-title">About Me</h2>
-      <div class="about-content">
-        <div class="about-text">
-          <p>
-            I'm a student developer passionate about building practical applications.
-            My main stack is <strong>Python + Flask + SQLite</strong>. I also work with HTML, CSS and basic JavaScript.
-          </p>
-          <p>
-            I work closely with my friend <strong>Anubhab Dutta</strong> (<a href="https://github.com/duttaanubhab777-code" target="_blank" rel="noopener" style="color:var(--accent)">@duttaanubhab777-code</a>),
-            who is excellent at frontend (HTML, CSS & JavaScript).
-            Together we create complete full-stack projects — I handle the backend (Flask + SQLite)
-            while he crafts clean and modern user interfaces.
-          </p>
-          <p>
-            I love turning everyday problems into working tools — money managers, news sites,
-            educational platforms, secure utilities and AI helpers.
-          </p>
-        </div>
-        <div class="about-cards">
-          <div class="info-card">
-            <i class="fas fa-graduation-cap"></i>
-            <h3>Student</h3>
-            <p>Learning by building real projects</p>
-          </div>
-          <div class="info-card">
-            <i class="fas fa-server"></i>
-            <h3>Backend Focus</h3>
-            <p>Python • Flask • SQLite</p>
-          </div>
-          <div class="info-card">
-            <i class="fas fa-users"></i>
-            <h3>Collaboration</h3>
-            <p>With Anubhab Dutta</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+        <!-- About -->
+        <section id="about" class="about">
+            <div class="container">
+                <h2 class="section-title reveal-up">About Me</h2>
 
-  <!-- Skills -->
-  <section id="skills" class="skills">
-    <div class="container">
-      <h2 class="section-title">Skills</h2>
-      <div class="skills-grid">
-        <div class="skill-card"><i class="fab fa-python"></i><h3>Python</h3><p>Core language for backend</p></div>
-        <div class="skill-card"><i class="fas fa-flask"></i><h3>Flask</h3><p>Web apps & APIs</p></div>
-        <div class="skill-card"><i class="fas fa-database"></i><h3>SQLite</h3><p>Database design</p></div>
-        <div class="skill-card"><i class="fab fa-html5"></i><h3>HTML</h3><p>Page structure</p></div>
-        <div class="skill-card"><i class="fab fa-css3-alt"></i><h3>CSS</h3><p>Styling & layout</p></div>
-        <div class="skill-card"><i class="fab fa-js"></i><h3>JavaScript</h3><p>Basic interactivity</p></div>
-      </div>
-    </div>
-  </section>
+                <div class="about-grid">
+                    <div class="code-card reveal-left">
+                        <div class="cc-bar">
+                            <i></i><i></i><i></i><span>developer.py</span>
+                        </div>
+                        <!-- এই অংশটা script.js এর ME ডাটা থেকে নিজে তৈরি হয় -->
+                        <div class="cc-body"></div>
+                    </div>
 
-  <!-- Projects -->
-  <section id="projects" class="projects">
-    <div class="container">
-      <h2 class="section-title">Featured Projects</h2>
-      <p class="section-subtitle">Live projects and tools I've built (several with Anubhab Dutta)</p>
+                    <div class="about-text reveal-right">
+                        <p>
+                            I'm a student developer passionate about building
+                            practical applications. My main stack is
+                            <strong class="hl-accent"
+                                >Python + Flask + SQLite</strong
+                            >. I also work with HTML, CSS and basic JavaScript.
+                        </p>
+                        <p>
+                            I work closely with my friend
+                            <strong class="hl-mint">Anubhab Dutta</strong> (<a
+                                href="https://github.com/duttaanubhab777-code"
+                                target="_blank"
+                                rel="noopener"
+                                class="about-link"
+                                >@duttaanubhab777-code</a
+                            >), who is excellent at frontend (HTML, CSS &amp;
+                            JavaScript). Together we create complete full-stack
+                            projects — I handle the backend (Flask + SQLite)
+                            while he crafts clean and modern user interfaces.
+                        </p>
+                        <p>
+                            I love turning everyday problems into working tools
+                            — money managers, news sites, educational platforms,
+                            secure utilities and AI helpers.
+                        </p>
+                        <div class="about-cta">
+                            <a href="#contact" class="btn btn-primary"
+                                >Let's Work Together</a
+                            >
+                            <a
+                                href="https://github.com/arnabadhikari777"
+                                target="_blank"
+                                rel="noopener"
+                                class="btn btn-outline"
+                                ><i class="fab fa-github"></i>&nbsp; GitHub</a
+                            >
+                        </div>
+                    </div>
+                </div>
 
-      <div class="projects-grid">
-
-        <!-- Money Manager -->
-        <article class="project-card featured">
-          <div class="project-img">
-            <img src="images/money-manager-dashboard.png" alt="My Money Manager" loading="lazy" />
-          </div>
-          <div class="project-body">
-            <div class="project-header">
-              <h3>My Money Manager</h3>
-              <div class="project-links">
-                <a href="https://github.com/arnabadhikari777/my_money_maneger" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
-              </div>
+                <div class="about-stats">
+                    <div class="stat reveal-up" style="--delay: 0.05s">
+                        <i class="fas fa-rocket"></i
+                        ><b data-stat="projects" data-count="0">0</b
+                        ><span>Projects Built</span>
+                    </div>
+                    <div class="stat reveal-up" style="--delay: 0.15s">
+                        <i class="fas fa-people-group"></i
+                        ><b data-stat="team" data-count="0">0</b
+                        ><span>Team Projects</span>
+                    </div>
+                    <div class="stat reveal-up" style="--delay: 0.25s">
+                        <i class="fas fa-globe"></i
+                        ><b data-stat="live" data-count="0">0</b
+                        ><span>Live Projects</span>
+                    </div>
+                </div>
             </div>
-            <p class="project-desc">
-              Full personal finance PWA with Flask + SQLAlchemy + SQLite.
-              Tracks multiple accounts (Bank, UPI, Cash with real note denominations),
-              encrypted notes, budgets, statistics, backup/restore and push reminders.
-            </p>
-            <div class="project-tags">
-              <span>Python</span><span>Flask</span><span>SQLite</span><span>PWA</span>
-            </div>
-          </div>
-        </article>
+        </section>
 
-        <!-- AA News -->
-        <article class="project-card featured">
-          <div class="project-img">
-            <img src="images/news.jpg" alt="A.A. News" loading="lazy" />
-          </div>
-          <div class="project-body">
-            <div class="project-header">
-              <h3>A.A. News</h3>
-              <div class="project-links">
-                <a href="https://arnabadhikari125117y.pythonanywhere.com/" target="_blank" rel="noopener" title="Live Demo"><i class="fas fa-external-link-alt"></i></a>
-                <a href="https://github.com/arnabadhikari777/AA_News" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
-              </div>
+        <!-- Skills -->
+        <section id="skills" class="skills">
+            <div class="container">
+                <h2 class="section-title reveal-up">Skills</h2>
+                <p class="section-subtitle reveal-up" style="--delay: 0.05s">
+                    Tools and technologies I build with
+                </p>
+                <div class="skills-grid">
+                    <div class="skill-card reveal-up" style="--delay: 0.05s">
+                        <i class="fab fa-python"></i>
+                        <h3>Python</h3>
+                        <p>Core language for backend</p>
+                    </div>
+                    <div class="skill-card reveal-up" style="--delay: 0.1s">
+                        <i class="fas fa-flask"></i>
+                        <h3>Flask</h3>
+                        <p>Web apps &amp; APIs</p>
+                    </div>
+                    <div class="skill-card reveal-up" style="--delay: 0.15s">
+                        <i class="fas fa-database"></i>
+                        <h3>SQLite</h3>
+                        <p>Database design</p>
+                    </div>
+                    <div class="skill-card reveal-up" style="--delay: 0.2s">
+                        <i class="fab fa-html5"></i>
+                        <h3>HTML</h3>
+                        <p>Page structure</p>
+                    </div>
+                    <div class="skill-card reveal-up" style="--delay: 0.25s">
+                        <i class="fab fa-css3-alt"></i>
+                        <h3>CSS</h3>
+                        <p>Styling &amp; layout</p>
+                    </div>
+                    <div class="skill-card reveal-up" style="--delay: 0.3s">
+                        <i class="fab fa-js"></i>
+                        <h3>JavaScript</h3>
+                        <p>Basic interactivity</p>
+                    </div>
+                </div>
             </div>
-            <p class="project-desc">
-              Live news website delivering verified headlines across politics, technology,
-              sports, business, entertainment and more. Fully deployed on PythonAnywhere.
-              <br><em>Collaborated with Anubhab Dutta (Frontend)</em>
-            </p>
-            <div class="project-tags">
-              <span>Python</span><span>Flask</span><span>News</span><span>Live</span>
-            </div>
-          </div>
-        </article>
+        </section>
 
-        <!-- Friendly Flux / Math -->
-        <article class="project-card featured">
-          <div class="project-img">
-            <img src="images/math.jpg" alt="Friendly Flux / Math Class" loading="lazy" />
-          </div>
-          <div class="project-body">
-            <div class="project-header">
-              <h3>Friendly Flux / Math Class</h3>
-              <div class="project-links">
-                <a href="https://arnabmathclass.pythonanywhere.com/" target="_blank" rel="noopener" title="Live Demo"><i class="fas fa-external-link-alt"></i></a>
-                <a href="https://github.com/arnabadhikari777/Friendly-Flux" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
-              </div>
+        <!-- Collaboration Projects -->
+        <section id="collaborations" class="projects">
+            <div class="container">
+                <h2 class="section-title reveal-up">Collaboration Projects</h2>
+                <p class="section-subtitle reveal-up" style="--delay: 0.05s">
+                    Built together with Anubhab Dutta — backend &amp; frontend,
+                    side by side
+                </p>
+                <!-- card গুলো projects.js থেকে এখানে বসে -->
+                <div class="projects-grid" id="collab-grid"></div>
             </div>
-            <p class="project-desc">
-              Educational platform for mastering Physics, Chemistry and Mathematics.
-              Interactive formulas, equation solving and beautiful visualizations designed for students.
-              <br><em>Collaborated with Anubhab Dutta (Frontend)</em>
-            </p>
-            <div class="project-tags">
-              <span>JavaScript</span><span>Education</span><span>Math</span><span>Live</span>
-            </div>
-          </div>
-        </article>
+        </section>
 
-        <!-- Beyonder AI -->
-        <article class="project-card">
-          <div class="project-img">
-            <img src="images/chat.jpg" alt="Beyonder AI" loading="lazy" />
-          </div>
-          <div class="project-body">
-            <div class="project-header">
-              <h3>Beyonder AI 2.0</h3>
-              <div class="project-links">
-                <a href="https://github.com/arnabadhikari777/Beyonder-Ai-2.0" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
-              </div>
+        <!-- My Projects -->
+        <section id="projects" class="projects alt">
+            <div class="container">
+                <h2 class="section-title reveal-up">My Projects</h2>
+                <p class="section-subtitle reveal-up" style="--delay: 0.05s">
+                    Tools and apps I've built on my own
+                </p>
+                <!-- card গুলো projects.js থেকে এখানে বসে -->
+                <div class="projects-grid" id="projects-grid"></div>
             </div>
-            <p class="project-desc">
-              Student-focused AI learning companion with clean chat interface.
-              Multiple modes (Normal, Smart, Thinker, Speedy), Markdown & math support.
-              <br><em>Collaborated with Anubhab Dutta (Frontend)</em>
-            </p>
-            <div class="project-tags">
-              <span>JavaScript</span><span>Flask</span><span>AI</span><span>PWA</span>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2 class="section-title reveal-up">Get In Touch</h2>
+                <p class="contact-intro reveal-up" style="--delay: 0.05s">
+                    Want to collaborate or just say hello? Reach out anytime!
+                </p>
+                <div class="contact-cards">
+                    <a
+                        href="https://wa.me/919475781056"
+                        target="_blank"
+                        rel="noopener"
+                        class="contact-card whatsapp reveal-up"
+                        style="--delay: 0.05s"
+                    >
+                        <i class="fab fa-whatsapp"></i>
+                        <h3>WhatsApp</h3>
+                        <p>+91 94757 81056</p>
+                    </a>
+                    <a
+                        href="mailto:arnabadhikari12517y@gmail.com"
+                        class="contact-card reveal-up"
+                        style="--delay: 0.1s"
+                    >
+                        <i class="fas fa-envelope"></i>
+                        <h3>Email</h3>
+                        <p>arnabadhikari12517y@gmail.com</p>
+                    </a>
+                    <a
+                        href="https://github.com/arnabadhikari777"
+                        target="_blank"
+                        rel="noopener"
+                        class="contact-card reveal-up"
+                        style="--delay: 0.15s"
+                    >
+                        <i class="fab fa-github"></i>
+                        <h3>GitHub</h3>
+                        <p>@arnabadhikari777</p>
+                    </a>
+                    <a
+                        href="https://www.linkedin.com/in/arnab-adhikari-377277433"
+                        target="_blank"
+                        rel="noopener"
+                        class="contact-card linkedin reveal-up"
+                        style="--delay: 0.2s"
+                    >
+                        <i class="fab fa-linkedin-in"></i>
+                        <h3>LinkedIn</h3>
+                        <p>Arnab Adhikari</p>
+                    </a>
+                    <a
+                        href="https://www.facebook.com/arnabadhikari7777"
+                        target="_blank"
+                        rel="noopener"
+                        class="contact-card facebook reveal-up"
+                        style="--delay: 0.25s"
+                    >
+                        <i class="fab fa-facebook-f"></i>
+                        <h3>Facebook</h3>
+                        <p>arnabadhikari7777</p>
+                    </a>
+                    <a
+                        href="https://www.instagram.com/arnabadhikari777"
+                        target="_blank"
+                        rel="noopener"
+                        class="contact-card instagram reveal-up"
+                        style="--delay: 0.3s"
+                    >
+                        <i class="fab fa-instagram"></i>
+                        <h3>Instagram</h3>
+                        <p>@arnabadhikari777</p>
+                    </a>
+                </div>
             </div>
-          </div>
-        </article>
+        </section>
 
-        <!-- Nebula Secret -->
-        <article class="project-card">
-          <div class="project-img">
-            <img src="images/nebula.jpg" alt="Nebula Secret" loading="lazy" />
-          </div>
-          <div class="project-body">
-            <div class="project-header">
-              <h3>Nebula Secret</h3>
-              <div class="project-links">
-                <a href="https://nebula-secret.onrender.com" target="_blank" rel="noopener" title="Live Demo"><i class="fas fa-external-link-alt"></i></a>
-                <a href="https://github.com/arnabadhikari777/Nebula-Secret" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
-              </div>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-socials">
+                    <a href="https://github.com/arnabadhikari777" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/arnab-adhikari-377277433" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.facebook.com/arnabadhikari7777" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/arnabadhikari777" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/919475781056" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="mailto:arnabadhikari12517y@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+                <p>© 2026 Arnab Adhikari. Built while learning.</p>
+                <p class="footer-note">
+                    Open to learning opportunities &amp; collaborations.
+                </p>
             </div>
-            <p class="project-desc">
-              Secure Steganography & Image Forensics Suite.
-              Hide secret messages inside images and perform basic image forensics analysis.
-            </p>
-            <div class="project-tags">
-              <span>Python</span><span>Steganography</span><span>Security</span><span>Live</span>
-            </div>
-          </div>
-        </article>
+        </footer>
 
-        <!-- Nebula QR -->
-        <article class="project-card">
-          <div class="project-img">
-            <img src="images/nebula-qr.png" alt="Nebula QR Re-generator" loading="lazy" />
-          </div>
-          <div class="project-body">
-            <div class="project-header">
-              <h3>Nebula QR Re-generator</h3>
-              <div class="project-links">
-                <a href="https://github.com/arnabadhikari777/Nebula-QR-Re-generator" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
-              </div>
-            </div>
-            <p class="project-desc">
-              Smart Payment & Brand QR Re-Engineering Studio.
-              Upload any payment QR, customize colors, embed logo and regenerate a clean branded QR code.
-            </p>
-            <div class="project-tags">
-              <span>Python</span><span>QR Code</span><span>Utility</span>
-            </div>
-          </div>
-        </article>
+        <button id="backToTop" aria-label="Back to top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
 
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section id="contact" class="contact">
-    <div class="container">
-      <h2 class="section-title">Get In Touch</h2>
-      <p class="contact-intro">Want to collaborate or just say hello? Reach out anytime!</p>
-      <div class="contact-cards">
-        <a href="https://wa.me/919475781056" target="_blank" rel="noopener" class="contact-card whatsapp">
-          <i class="fab fa-whatsapp"></i>
-          <h3>WhatsApp</h3>
-          <p>+91 94757 81056 </p>
-        </a>
-        <a href="mailto:arnabadhikari12517y@gmail.com" class="contact-card">
-          <i class="fas fa-envelope"></i>
-          <h3>Email</h3>
-          <p>arnabadhikari12517y@gmail.com</p>
-        </a>
-        <a href="https://github.com/arnabadhikari777" target="_blank" rel="noopener" class="contact-card">
-          <i class="fab fa-github"></i>
-          <h3>GitHub</h3>
-          <p>@arnabadhikari777</p>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <p>© 2026 Arnab Adhikari. Built while learning.</p>
-      <p class="footer-note">Open to learning opportunities & collaborations.</p>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
+        <script src="projects.js"></script>
+        <script src="script.js"></script>
+    </body>
 </html>
