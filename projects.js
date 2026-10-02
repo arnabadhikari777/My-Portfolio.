@@ -158,7 +158,7 @@ const ICON_RULES = [
 const pickIcon = t => (ICON_RULES.find(([re]) => re.test(t)) || [0, "fa-circle-check"])[1];
 
 /* Thumbnail generator */
-const thumbOf = s => s.replace(/^images\/([^/]+)\.\w+$/, "images/thumb/$1.webp");
+const thumbOf = s => s;  // use original image (no thumb folder)
 
 /* Parse HTML description */
 function parseDesc(html) {

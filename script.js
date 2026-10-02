@@ -254,7 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const vals = {
             projects: PROJECTS.length,
             team: PROJECTS.filter(p => p.team).length,
-            live: PROJECTS.filter(p => p.liveLink).length // HTML-এ live data-stat দেওয়া আছে 
+            live: PROJECTS.filter(p => p.demo).length // HTML-এ live data-stat দেওয়া আছে 
         };
         document.querySelectorAll("[data-stat]").forEach(el => {
             el.dataset.count = vals[el.dataset.stat] || 0;
