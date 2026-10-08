@@ -1,447 +1,260 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta
-            name="description"
-            content="Arnab Adhikari - Student Developer | Python, Flask, SQLite Portfolio"
-        />
-        <meta name="author" content="Arnab Adhikari" />
-        <meta name="theme-color" content="#0f172a" />
-        <title>Arnab Adhikari | Portfolio</title>
-        <link
-            rel="preload"
-            as="image"
-            href="images/profilepic.webp"
-            type="image/webp"
-        />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            rel="preconnect"
-            href="https://cdnjs.cloudflare.com"
-            crossorigin
-        />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
-            rel="stylesheet"
-        />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        />
-        <link rel="stylesheet" href="style.css" />
-    </head>
-    <body>
-        <!-- Preloader -->
-        <div id="preloader">
-            <div class="loader-ring"></div>
-            <div class="loader-text">
-                <span class="gradient-text">Loading</span
-                ><span class="loader-pct" id="loaderPct">0%</span>
-            </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Arnab Adhikari - Student Developer | Python, Flask, SQLite Portfolio" />
+  <meta name="author" content="Arnab Adhikari" />
+  <meta name="theme-color" content="#0a0f1a" />
+  <title>Arnab Adhikari | Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader">
+      <div class="loader-ring"></div>
+      <span class="loader-text">Arnab<span>.</span></span>
+    </div>
+  </div>
+
+  <!-- Scroll Progress -->
+  <div id="scroll-progress"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="#home" class="logo">Arnab<span>.</span></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <div class="hero-bg"></div>
+    <div class="container hero-content">
+      <div class="hero-text">
+        <div class="badge">
+          <span class="pulse"></span>
+          Open to collaborate
         </div>
-
-        <!-- Scroll progress + cursor glow (desktop only) -->
-        <div id="scroll-progress"></div>
-        <div class="cursor-glow" id="cursorGlow"></div>
-
-        <!-- Navbar -->
-        <nav class="navbar" id="navbar">
-            <div class="container nav-container">
-                <a href="#home" class="logo">Arnab<span>.</span></a>
-                <ul class="nav-links" id="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#collaborations">Collaborations</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-                <button class="hamburger" id="hamburger" aria-label="Menu">
-                    <span></span><span></span><span></span>
-                </button>
-            </div>
-        </nav>
-
-        <!-- Hero -->
-        <section id="home" class="hero">
-            <canvas id="particles" aria-hidden="true"></canvas>
-            <div class="container hero-content">
-                <div class="hero-text reveal-left">
-                    <p class="hero-eyebrow">
-                        <span class="dot-blink"></span> Open to collaborate
-                    </p>
-                    <p class="hero-greeting">Hi, I'm</p>
-                    <h1>Arnab Adhikari</h1>
-                    <h2 class="hero-role">
-                        <span class="gradient-text" id="scrambleWord"
-                            >Student Developer</span
-                        >
-                    </h2>
-                    <p class="hero-desc">
-                        Building real-world web apps with
-                        <strong>Python</strong>, <strong>Flask</strong> &amp;
-                        <strong>SQLite</strong>. I focus on backend while
-                        collaborating with my friend
-                        <strong>Anubhab Dutta</strong> (excellent in HTML, CSS
-                        &amp; JavaScript).
-                    </p>
-                    <div class="hero-btns">
-                        <a href="#collaborations" class="btn btn-primary"
-                            >View Projects</a
-                        >
-                        <a href="#contact" class="btn btn-outline"
-                            >Contact Me</a
-                        >
-                    </div>
-                    <div class="hero-socials">
-                        <a
-                            href="https://github.com/arnabadhikari777"
-                            target="_blank"
-                            rel="noopener"
-                            aria-label="GitHub"
-                            ><i class="fab fa-github"></i
-                        ></a>
-                        <a
-                            href="https://www.linkedin.com/in/arnab-adhikari-377277433"
-                            target="_blank"
-                            rel="noopener"
-                            aria-label="LinkedIn"
-                            ><i class="fab fa-linkedin-in"></i
-                        ></a>
-                        <a
-                            href="https://www.facebook.com/arnabadhikari7777"
-                            target="_blank"
-                            rel="noopener"
-                            aria-label="Facebook"
-                            ><i class="fab fa-facebook-f"></i
-                        ></a>
-                        <a
-                            href="https://www.instagram.com/arnabadhikari777"
-                            target="_blank"
-                            rel="noopener"
-                            aria-label="Instagram"
-                            ><i class="fab fa-instagram"></i
-                        ></a>
-                        <a
-                            href="https://wa.me/919475781056"
-                            target="_blank"
-                            rel="noopener"
-                            aria-label="WhatsApp"
-                            ><i class="fab fa-whatsapp"></i
-                        ></a>
-                        <a
-                            href="mailto:arnabadhikari12517y@gmail.com"
-                            aria-label="Email"
-                            ><i class="fas fa-envelope"></i
-                        ></a>
-                    </div>
-                </div>
-
-                <div class="hero-image reveal-right">
-                    <div class="hero-stage">
-                        <div class="orbit-ring ring-1"></div>
-                        <div class="orbit-ring ring-2"></div>
-                        <div class="hero-disc"></div>
-                        <div class="hero-photo-wrap">
-                            <img
-                                class="hero-photo"
-                                src="images/profilepic.webp"
-                                alt="Arnab Adhikari"
-                                width="464"
-                                height="492"
-                                fetchpriority="high"
-                                decoding="async"
-                            />
-                        </div>
-                        <div class="tech-orbit">
-                            <div class="tech-orbit-track">
-                                <div class="tech-badge" style="--angle: 0deg">
-                                    <span><i class="fab fa-python"></i></span>
-                                </div>
-                                <div class="tech-badge" style="--angle: 90deg">
-                                    <span><i class="fas fa-flask"></i></span>
-                                </div>
-                                <div class="tech-badge" style="--angle: 180deg">
-                                    <span><i class="fas fa-database"></i></span>
-                                </div>
-                                <div class="tech-badge" style="--angle: 270deg">
-                                    <span><i class="fab fa-js"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hero-chip chip-a">
-                            <i class="fas fa-server"></i> Backend Dev
-                        </div>
-                        <div class="hero-chip chip-b">
-                            <span class="dot-blink"></span> Open to collaborate
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <a href="#about" class="scroll-cue" aria-label="Scroll down"
-                ><span></span
-            ></a>
-        </section>
-
-        <!-- Tech marquee -->
-        <div class="marquee" aria-hidden="true">
-            <div class="marquee-track">
-                <span>Python</span><span>Flask</span><span>SQLite</span
-                ><span>SQLAlchemy</span><span>HTML5</span><span>CSS3</span
-                ><span>JavaScript</span><span>PWA</span
-                ><span>Open to Collaborate</span><span>Backend Development</span
-                ><span>Always Learning</span> <span>Python</span
-                ><span>Flask</span><span>SQLite</span><span>SQLAlchemy</span
-                ><span>HTML5</span><span>CSS3</span><span>JavaScript</span
-                ><span>PWA</span><span>Open to Collaborate</span
-                ><span>Backend Development</span><span>Always Learning</span>
-            </div>
+        <h1>Hi, I'm <span class="gradient">Arnab Adhikari</span></h1>
+        <h2 class="role">Backend Developer & Student</h2>
+        <p class="hero-desc">
+          I build real-world web apps with <strong>Python</strong>, <strong>Flask</strong> & <strong>SQLite</strong>.
+          I focus on solid backends while collaborating with my friend
+          <strong>Anubhab Dutta</strong> on full-stack projects.
+        </p>
+        <div class="hero-actions">
+          <a href="#team" class="btn btn-primary">View Projects</a>
+          <a href="#contact" class="btn btn-outline">Contact Me</a>
         </div>
+        <div class="hero-socials">
+          <a href="https://github.com/arnabadhikari777" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/arnab-adhikari-377277433" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://www.facebook.com/arnabadhikari7777" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/arnabadhikari777" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/919475781056" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <a href="mailto:arnabadhikari12517y@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="avatar-wrap">
+          <div class="avatar-ring"></div>
+          <div class="avatar-ring ring-2"></div>
+          <img src="images/profile.jpg" alt="Arnab Adhikari" class="avatar" onerror="this.src='https://avatars.githubusercontent.com/u/arnabadhikari777?v=4'" />
+        </div>
+        <div class="floating-tech">
+          <span><i class="fab fa-python"></i></span>
+          <span><i class="fas fa-flask"></i></span>
+          <span><i class="fas fa-database"></i></span>
+          <span><i class="fab fa-js"></i></span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <!-- About -->
-        <section id="about" class="about">
-            <div class="container">
-                <h2 class="section-title reveal-up">About Me</h2>
+  <!-- Marquee -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>Python</span><span>Flask</span><span>SQLite</span><span>SQLAlchemy</span>
+      <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>PWA</span>
+      <span>Backend Development</span><span>Open to Collaborate</span>
+      <span>Python</span><span>Flask</span><span>SQLite</span><span>SQLAlchemy</span>
+      <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>PWA</span>
+      <span>Backend Development</span><span>Open to Collaborate</span>
+    </div>
+  </div>
 
-                <div class="about-grid">
-                    <div class="code-card reveal-left">
-                        <div class="cc-bar">
-                            <i></i><i></i><i></i><span>developer.py</span>
-                        </div>
-                        <!-- এই অংশটা script.js এর ME ডাটা থেকে নিজে তৈরি হয় -->
-                        <div class="cc-body"></div>
-                    </div>
-
-                    <div class="about-text reveal-right">
-                        <p>
-                            I'm a student developer passionate about building
-                            practical applications. My main stack is
-                            <strong class="hl-accent"
-                                >Python + Flask + SQLite</strong
-                            >. I also work with HTML, CSS and basic JavaScript.
-                        </p>
-                        <p>
-                            I work closely with my friend
-                            <strong class="hl-mint">Anubhab Dutta</strong> (<a
-                                href="https://github.com/duttaanubhab777-code"
-                                target="_blank"
-                                rel="noopener"
-                                class="about-link"
-                                >@duttaanubhab777-code</a
-                            >), who is excellent at frontend (HTML, CSS &amp;
-                            JavaScript). Together we create complete full-stack
-                            projects — I handle the backend (Flask + SQLite)
-                            while he crafts clean and modern user interfaces.
-                        </p>
-                        <p>
-                            I love turning everyday problems into working tools
-                            — money managers, news sites, educational platforms,
-                            secure utilities and AI helpers.
-                        </p>
-                        <div class="about-cta">
-                            <a href="#contact" class="btn btn-primary"
-                                >Let's Work Together</a
-                            >
-                            <a
-                                href="https://github.com/arnabadhikari777"
-                                target="_blank"
-                                rel="noopener"
-                                class="btn btn-outline"
-                                ><i class="fab fa-github"></i>&nbsp; GitHub</a
-                            >
-                        </div>
-                    </div>
-                </div>
-
-                <div class="about-stats">
-                    <div class="stat reveal-up" style="--delay: 0.05s">
-                        <i class="fas fa-rocket"></i
-                        ><b data-stat="projects" data-count="0">0</b
-                        ><span>Projects Built</span>
-                    </div>
-                    <div class="stat reveal-up" style="--delay: 0.15s">
-                        <i class="fas fa-people-group"></i
-                        ><b data-stat="team" data-count="0">0</b
-                        ><span>Team Projects</span>
-                    </div>
-                    <div class="stat reveal-up" style="--delay: 0.25s">
-                        <i class="fas fa-globe"></i
-                        ><b data-stat="live" data-count="0">0</b
-                        ><span>Live Projects</span>
-                    </div>
-                </div>
+  <!-- About -->
+  <section id="about" class="section">
+    <div class="container">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-grid">
+        <div class="about-card code-card">
+          <div class="code-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="filename">developer.py</span>
+          </div>
+          <pre class="code-body"><code><span class="kw">developer</span> = {
+  <span class="str">"name"</span>: <span class="str">"Arnab Adhikari"</span>,
+  <span class="str">"role"</span>: <span class="str">"Backend Developer"</span>,
+  <span class="str">"stack"</span>: [<span class="str">"Python"</span>, <span class="str">"Flask"</span>, <span class="str">"SQLite"</span>],
+  <span class="str">"teammate"</span>: <span class="str">"Anubhab Dutta"</span>,
+  <span class="str">"motto"</span>: <span class="str">"Learn by building"</span>,
+  <span class="str">"open_to_collab"</span>: <span class="bool">True</span>
+}</code></pre>
+        </div>
+        <div class="about-text">
+          <p>I'm a student developer passionate about building practical applications. My main stack is <strong>Python + Flask + SQLite</strong>. I also work with HTML, CSS and JavaScript.</p>
+          <p>I work closely with my friend <strong>Anubhab Dutta</strong> (<a href="https://github.com/duttaanubhab777-code" target="_blank" rel="noopener">@duttaanubhab777-code</a>), who is excellent at frontend. Together we create complete full-stack projects — I handle the backend while he crafts clean and modern user interfaces.</p>
+          <p>I love turning everyday problems into working tools — money managers, news sites, educational platforms, secure utilities and AI helpers.</p>
+          <div class="about-stats">
+            <div class="stat">
+              <b id="stat-projects">0</b>
+              <span>Projects</span>
             </div>
-        </section>
-
-        <!-- Skills -->
-        <section id="skills" class="skills">
-            <div class="container">
-                <h2 class="section-title reveal-up">Skills</h2>
-                <p class="section-subtitle reveal-up" style="--delay: 0.05s">
-                    Tools and technologies I build with
-                </p>
-                <div class="skills-grid">
-                    <div class="skill-card reveal-up" style="--delay: 0.05s">
-                        <i class="fab fa-python"></i>
-                        <h3>Python</h3>
-                        <p>Core language for backend</p>
-                    </div>
-                    <div class="skill-card reveal-up" style="--delay: 0.1s">
-                        <i class="fas fa-flask"></i>
-                        <h3>Flask</h3>
-                        <p>Web apps &amp; APIs</p>
-                    </div>
-                    <div class="skill-card reveal-up" style="--delay: 0.15s">
-                        <i class="fas fa-database"></i>
-                        <h3>SQLite</h3>
-                        <p>Database design</p>
-                    </div>
-                    <div class="skill-card reveal-up" style="--delay: 0.2s">
-                        <i class="fab fa-html5"></i>
-                        <h3>HTML</h3>
-                        <p>Page structure</p>
-                    </div>
-                    <div class="skill-card reveal-up" style="--delay: 0.25s">
-                        <i class="fab fa-css3-alt"></i>
-                        <h3>CSS</h3>
-                        <p>Styling &amp; layout</p>
-                    </div>
-                    <div class="skill-card reveal-up" style="--delay: 0.3s">
-                        <i class="fab fa-js"></i>
-                        <h3>JavaScript</h3>
-                        <p>Basic interactivity</p>
-                    </div>
-                </div>
+            <div class="stat">
+              <b id="stat-team">0</b>
+              <span>Team Projects</span>
             </div>
-        </section>
-
-        <!-- Collaboration Projects -->
-        <section id="collaborations" class="projects">
-            <div class="container">
-                <h2 class="section-title reveal-up">Collaboration Projects</h2>
-                <p class="section-subtitle reveal-up" style="--delay: 0.05s">
-                    Built together with Anubhab Dutta — backend &amp; frontend,
-                    side by side
-                </p>
-                <!-- card গুলো projects.js থেকে এখানে বসে -->
-                <div class="projects-grid" id="collab-grid"></div>
+            <div class="stat">
+              <b id="stat-live">0</b>
+              <span>Live Projects</span>
             </div>
-        </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <!-- My Projects -->
-        <section id="projects" class="projects alt">
-            <div class="container">
-                <h2 class="section-title reveal-up">My Projects</h2>
-                <p class="section-subtitle reveal-up" style="--delay: 0.05s">
-                    Tools and apps I've built on my own
-                </p>
-                <!-- card গুলো projects.js থেকে এখানে বসে -->
-                <div class="projects-grid" id="projects-grid"></div>
-            </div>
-        </section>
+  <!-- Skills -->
+  <section id="skills" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-icon"><i class="fab fa-python"></i></div>
+          <h3>Python</h3>
+          <p>Core language for backend, automation & tools</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon"><i class="fas fa-flask"></i></div>
+          <h3>Flask</h3>
+          <p>Web apps, APIs, PWA backends</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon"><i class="fas fa-database"></i></div>
+          <h3>SQLite + SQLAlchemy</h3>
+          <p>Database design & ORM</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon"><i class="fab fa-html5"></i></div>
+          <h3>HTML & CSS</h3>
+          <p>Semantic markup & modern styling</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon"><i class="fab fa-js"></i></div>
+          <h3>JavaScript</h3>
+          <p>Interactivity & frontend logic</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
+          <h3>PWA</h3>
+          <p>Installable progressive web apps</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <!-- Contact -->
-        <section id="contact" class="contact">
-            <div class="container">
-                <h2 class="section-title reveal-up">Get In Touch</h2>
-                <p class="contact-intro reveal-up" style="--delay: 0.05s">
-                    Want to collaborate or just say hello? Reach out anytime!
-                </p>
-                <div class="contact-cards">
-                    <a
-                        href="https://wa.me/919475781056"
-                        target="_blank"
-                        rel="noopener"
-                        class="contact-card whatsapp reveal-up"
-                        style="--delay: 0.05s"
-                    >
-                        <i class="fab fa-whatsapp"></i>
-                        <h3>WhatsApp</h3>
-                        <p>+91 94757 81056</p>
-                    </a>
-                    <a
-                        href="mailto:arnabadhikari12517y@gmail.com"
-                        class="contact-card reveal-up"
-                        style="--delay: 0.1s"
-                    >
-                        <i class="fas fa-envelope"></i>
-                        <h3>Email</h3>
-                        <p>arnabadhikari12517y@gmail.com</p>
-                    </a>
-                    <a
-                        href="https://github.com/arnabadhikari777"
-                        target="_blank"
-                        rel="noopener"
-                        class="contact-card reveal-up"
-                        style="--delay: 0.15s"
-                    >
-                        <i class="fab fa-github"></i>
-                        <h3>GitHub</h3>
-                        <p>@arnabadhikari777</p>
-                    </a>
-                    <a
-                        href="https://www.linkedin.com/in/arnab-adhikari-377277433"
-                        target="_blank"
-                        rel="noopener"
-                        class="contact-card linkedin reveal-up"
-                        style="--delay: 0.2s"
-                    >
-                        <i class="fab fa-linkedin-in"></i>
-                        <h3>LinkedIn</h3>
-                        <p>Arnab Adhikari</p>
-                    </a>
-                    <a
-                        href="https://www.facebook.com/arnabadhikari7777"
-                        target="_blank"
-                        rel="noopener"
-                        class="contact-card facebook reveal-up"
-                        style="--delay: 0.25s"
-                    >
-                        <i class="fab fa-facebook-f"></i>
-                        <h3>Facebook</h3>
-                        <p>arnabadhikari7777</p>
-                    </a>
-                    <a
-                        href="https://www.instagram.com/arnabadhikari777"
-                        target="_blank"
-                        rel="noopener"
-                        class="contact-card instagram reveal-up"
-                        style="--delay: 0.3s"
-                    >
-                        <i class="fab fa-instagram"></i>
-                        <h3>Instagram</h3>
-                        <p>@arnabadhikari777</p>
-                    </a>
-                </div>
-            </div>
-        </section>
+  <!-- Team Projects -->
+  <section id="team" class="section">
+    <div class="container">
+      <h2 class="section-title">Team Projects</h2>
+      <p class="section-subtitle">Built together with <strong>Anubhab Dutta</strong></p>
+      <div class="projects-grid" id="team-grid"></div>
+    </div>
+  </section>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="container">
-                <div class="footer-socials">
-                    <a href="https://github.com/arnabadhikari777" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/arnab-adhikari-377277433" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="https://www.facebook.com/arnabadhikari7777" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/arnabadhikari777" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://wa.me/919475781056" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="mailto:arnabadhikari12517y@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                </div>
-                <p>© 2026 Arnab Adhikari. Built while learning.</p>
-                <p class="footer-note">
-                    Open to learning opportunities &amp; collaborations.
-                </p>
-            </div>
-        </footer>
+  <!-- Solo Projects -->
+  <section id="projects" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">Solo Projects</h2>
+      <p class="section-subtitle">Projects I built myself (some UI improved by Anubhab)</p>
+      <div class="projects-grid" id="solo-grid"></div>
+    </div>
+  </section>
 
-        <button id="backToTop" aria-label="Back to top">
-            <i class="fas fa-arrow-up"></i>
-        </button>
+  <!-- Contact -->
+  <section id="contact" class="section">
+    <div class="container">
+      <h2 class="section-title">Get In Touch</h2>
+      <p class="section-subtitle">Feel free to reach out for collaborations or just a chat</p>
+      <div class="contact-grid">
+        <a href="mailto:arnabadhikari12517y@gmail.com" class="contact-card">
+          <i class="fas fa-envelope"></i>
+          <h3>Email</h3>
+          <p>arnabadhikari12517y@gmail.com</p>
+        </a>
+        <a href="https://wa.me/919475781056" target="_blank" rel="noopener" class="contact-card">
+          <i class="fab fa-whatsapp"></i>
+          <h3>WhatsApp</h3>
+          <p>+91 94757 81056</p>
+        </a>
+        <a href="https://github.com/arnabadhikari777" target="_blank" rel="noopener" class="contact-card">
+          <i class="fab fa-github"></i>
+          <h3>GitHub</h3>
+          <p>@arnabadhikari777</p>
+        </a>
+        <a href="https://www.linkedin.com/in/arnab-adhikari-377277433" target="_blank" rel="noopener" class="contact-card">
+          <i class="fab fa-linkedin-in"></i>
+          <h3>LinkedIn</h3>
+          <p>Arnab Adhikari</p>
+        </a>
+      </div>
+    </div>
+  </section>
 
-        <script src="projects.js"></script>
-        <script src="script.js"></script>
-    </body>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>Made with <i class="fas fa-heart"></i> by Arnab Adhikari · Open to collaborations</p>
+      <div class="footer-socials">
+        <a href="https://github.com/arnabadhikari777" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/arnab-adhikari-377277433" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://www.instagram.com/arnabadhikari777" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <button id="backToTop" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lb-close" aria-label="Close"><i class="fas fa-xmark"></i></button>
+    <img src="" alt="" />
+    <p class="lb-cap"></p>
+  </div>
+
+  <script src="js/projects.js"></script>
+  <script src="js/script.js"></script>
+</body>
 </html>
